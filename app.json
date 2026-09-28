@@ -3,7 +3,8 @@
     "name": "fateful-moment",
     "slug": "fateful-moment",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "scheme": "fatefulmoment",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
@@ -20,6 +21,20 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router",
+      "expo-status-bar",
+      [
+        "expo-navigation-bar",
+        {
+          "hidden": true,
+          "enforceContrast": false,
+          "style": "dark"
+        }
+      ],
+      "expo-video"
+    ]
   }
 }
