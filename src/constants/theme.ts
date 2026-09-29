@@ -11,9 +11,9 @@ export const Colors = {
 };
 
 export const Typography = {
+  
   displayLarge: {
-    fontFamily: 'Inter_900Black',
-    fontStyle: 'italic',
+    fontFamily: 'Inter_900Black_Italic',
     fontSize: 60,
     lineHeight: 60,
     letterSpacing: -2.74,
@@ -22,8 +22,7 @@ export const Typography = {
   } as TextStyle,
   
   heading1: {
-    fontFamily: 'Inter_900Black',
-    fontStyle: 'italic',
+    fontFamily: 'Inter_900Black_Italic',
     fontSize: 36,
     lineHeight: 40,
     letterSpacing: -1.43,
@@ -44,7 +43,7 @@ export const Typography = {
   bodyText: {
     fontFamily: 'Inter_400Regular',
     fontSize: 16,
-    lineHeight: 26,
+    lineHeight: 24,
     letterSpacing: -0.31,
     color: Colors.textMuted,
   } as TextStyle,

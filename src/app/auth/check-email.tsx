@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { Button } from '../../components/ui/Button';
 import { Colors, Layout } from '../../constants/theme';
 import { SuccessIcon } from '../../components/ui/SuccessIcon';
+import { IPhoneChrome } from '../../components/system/IPhoneChrome';
 
 export default function CheckEmailScreen() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function CheckEmailScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <IPhoneChrome />
       <View style={styles.content}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()} accessibilityLabel="Go back">
           <Feather name="arrow-left" size={20} color={Colors.textMuted} />
@@ -35,7 +37,7 @@ export default function CheckEmailScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background },
   content: { flex: 1, paddingHorizontal: 24, paddingTop: Layout.spacing.sm },
-  backButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center' },
+  backButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', transform: [{ translateY: 16 }] },
   confirmation: { width: '100%', height: 280, alignItems: 'center', marginTop: 94, paddingHorizontal: 12 },
   iconDisc: { width: 72, height: 72, borderRadius: 36, backgroundColor: 'rgba(0, 211, 243, 0.2)', alignItems: 'center', justifyContent: 'center', marginBottom: 24 },
   title: { width: 282, height: 32, fontFamily: 'Inter_700Bold', fontSize: 24, lineHeight: 32, letterSpacing: 0, color: '#FFFFFF', textAlign: 'center', marginBottom: 8 },

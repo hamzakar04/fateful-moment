@@ -26,3 +26,5 @@ yarn-error.*
 .tmp-flow
 .tmp-flow2
 .tmp-flow3
+scratch/
+assets/for_antigravity/

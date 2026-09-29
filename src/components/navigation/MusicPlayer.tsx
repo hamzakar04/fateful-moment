@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { SvgXml } from 'react-native-svg';
 import { Colors } from '../../constants/theme';
@@ -13,7 +13,7 @@ export function MusicPlayer() {
   return (
     <View style={styles.container}>
       <Pressable accessibilityLabel="Previous track" style={styles.smallButton} hitSlop={8}>
-        <Feather name="skip-back" size={16} color={Colors.textMuted} />
+        <Feather name="skip-back" size={16} color="#62748E" />
       </Pressable>
       <Pressable
         accessibilityLabel={isPlaying ? 'Pause music' : 'Play music'}
@@ -23,7 +23,7 @@ export function MusicPlayer() {
         {isPlaying ? <Feather name="pause" size={16} color={Colors.primary} /> : <SvgXml xml={filledPlayXml} width={16} height={16} />}
       </Pressable>
       <Pressable accessibilityLabel="Next track" style={styles.smallButton} hitSlop={8}>
-        <Feather name="skip-forward" size={16} color={Colors.textMuted} />
+        <Feather name="skip-forward" size={16} color="#62748E" />
       </Pressable>
       <View style={styles.trackInfo}>
         <Text style={styles.status}>STANDBY</Text>
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     backgroundColor: 'rgba(15, 23, 43, 0.8)',
     borderWidth: 1,
+    borderRightWidth: 0,
     borderColor: 'rgba(49, 65, 88, 0.5)',
     flexDirection: 'row',
     alignItems: 'center',
@@ -55,21 +56,46 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
+    zIndex: 10,
+    shadowColor: '#06B6D4',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 15,
+    elevation: 6,
   },
   smallButton: { width: 16, height: 16, alignItems: 'center', justifyContent: 'center' },
   playButton: {
     width: 32,
     height: 32,
     borderRadius: 999,
+    borderWidth: 1,
+    paddingLeft: 1.96,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(0, 184, 219, 0.1)',
-    borderWidth: 1,
     borderColor: 'rgba(0, 184, 219, 0.3)',
+    boxShadow: '0px 0px 15px 0px rgba(6, 182, 212, 0.2)',
+    elevation: 3,
   },
-  trackInfo: { flex: 1, minWidth: 0, gap: 0 },
-  status: { color: Colors.primary, fontFamily: 'Inter_400Regular', fontSize: 9, lineHeight: 12, letterSpacing: 1 },
-  track: { color: Colors.text, fontFamily: 'Inter_700Bold', fontSize: 12, lineHeight: 16 },
+  trackInfo: { width: 103, minWidth: 0, gap: 0 },
+  status: {
+    height: 14,
+    opacity: 0.62,
+    color: 'rgba(0, 211, 243, 0.8)',
+    fontFamily: Platform.select({ ios: 'Menlo', default: 'monospace' }),
+    fontSize: 9,
+    lineHeight: 14,
+    letterSpacing: 0.9,
+    textTransform: 'uppercase',
+  },
+  track: {
+    width: 99,
+    color: '#F1F5F9',
+    fontFamily: 'Inter_700Bold',
+    fontSize: 10,
+    lineHeight: 15,
+    textTransform: 'uppercase',
+  },
   playlistButton: {
     width: 24,
     height: 24,

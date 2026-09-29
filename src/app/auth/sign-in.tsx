@@ -5,7 +5,8 @@ import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
-import { Colors, Layout, Typography } from '../../constants/theme';
+import { Colors, Layout } from '../../constants/theme';
+import { IPhoneChrome } from '../../components/system/IPhoneChrome';
 
 export default function SignInScreen() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function SignInScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <IPhoneChrome />
       <KeyboardAvoidingView style={styles.keyboard} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()} accessibilityLabel="Go back">
@@ -33,16 +35,38 @@ export default function SignInScreen() {
           </View>
 
           <View style={styles.form}>
-            <Input label="Your email address" showLabel={false} compact placeholder="Your email address" keyboardType="email-address" autoCapitalize="none" value={email} error={emailError} onChangeText={setEmail} onBlur={() => setEmailTouched(true)} />
-            <Input label="Your password" showLabel={false} compact placeholder="Your password" isPassword value={password} onChangeText={setPassword} />
+            <Input
+              label="Your email address"
+              showLabel={false}
+              compact
+              placeholder="Your email address"
+              placeholderTextColor="#62748E"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              value={email}
+              error={emailError}
+              onChangeText={setEmail}
+              onBlur={() => setEmailTouched(true)}
+            />
+            <Input
+              label="Your password"
+              showLabel={false}
+              compact
+              placeholder="Your password"
+              placeholderTextColor="#62748E"
+              isPassword
+              value={password}
+              onChangeText={setPassword}
+            />
 
             <Button
               title="Sign In"
               onPress={() => {
                 if (canSubmit) router.replace('/home');
               }}
-              variant="secondary"
-              style={[styles.submitButton, !canSubmit && styles.submitButtonDisabled]}
+              variant="glass"
+              disabled={!canSubmit}
+              style={styles.submitButton}
               textStyle={styles.submitText}
             />
 
@@ -64,21 +88,105 @@ export default function SignInScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
-  keyboard: { flex: 1 },
-  scrollContent: { flexGrow: 1, paddingHorizontal: 24, paddingTop: Layout.spacing.sm, paddingBottom: Layout.spacing.lg },
-  backButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
-  header: { width: '100%', height: 241, alignItems: 'center', marginBottom: Layout.spacing.xl },
-  logo: { width: 148, height: 148, borderRadius: 74, marginBottom: 12 },
-  title: { width: 327, height: 25, fontFamily: 'Inter_700Bold', fontSize: 20, lineHeight: 25, letterSpacing: 0, color: '#FFFFFF', textAlign: 'center' },
-  subtitle: { fontFamily: 'Inter_400Regular', fontSize: 16, lineHeight: 24, letterSpacing: 0, color: Colors.textMuted, textAlign: 'center', marginTop: 8 },
-  form: { gap: 0 },
-  submitButton: { height: 56, borderRadius: 16, marginTop: 16, backgroundColor: 'rgba(0, 211, 243, 0.14)', borderWidth: 1, borderColor: 'rgba(0, 211, 243, 0.48)', borderTopWidth: 1, borderTopColor: 'rgba(0, 211, 243, 0.48)' },
-  submitButtonDisabled: { opacity: 0.55 },
-  submitText: { color: Colors.primary, fontFamily: 'Inter_400Regular', fontSize: 16, lineHeight: 24 },
-  forgotButton: { width: '100%', height: 24, alignItems: 'center', justifyContent: 'center', marginTop: 24 },
-  forgotText: { fontFamily: 'Inter_400Regular', fontSize: 14, lineHeight: 20, color: Colors.primary },
-  footer: { width: '100%', height: 24, flexDirection: 'row', justifyContent: 'center', marginTop: 48 },
-  footerText: { fontFamily: 'Inter_400Regular', fontSize: 14, lineHeight: 20, color: Colors.textMuted },
-  footerLink: { fontFamily: 'Inter_700Bold', fontSize: 14, lineHeight: 20, color: Colors.primary, textDecorationLine: 'underline' },
+  container: {
+    flex: 1,
+    backgroundColor: '#020618',
+  },
+  keyboard: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 24,
+    paddingTop: 14,
+    paddingBottom: Layout.spacing.lg,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 999,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderWidth: 0.75,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  header: {
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  logo: {
+    width: 148,
+    height: 148,
+    borderRadius: 74,
+    marginBottom: 36,
+  },
+  title: {
+    width: 327,
+    fontFamily: 'Inter_700Bold',
+    fontSize: 20,
+    lineHeight: 25,
+    letterSpacing: 0,
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 16,
+    lineHeight: 24,
+    letterSpacing: 0,
+    color: '#90A1B9',
+    textAlign: 'center',
+    marginTop: 8,
+  },
+  form: {
+    gap: 16,
+  },
+  submitButton: {
+    marginTop: 16,
+  },
+  submitText: {
+    fontFamily: 'Inter_500Medium',
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#00D3F3',
+    textAlign: 'center',
+  },
+  forgotButton: {
+    width: '100%',
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+  },
+  forgotText: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#00D3F3',
+    textAlign: 'center',
+  },
+  footer: {
+    width: '100%',
+    height: 24,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 56,
+  },
+  footerText: {
+    fontFamily: 'Inter_400Regular',
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#90A1B9',
+  },
+  footerLink: {
+    fontFamily: 'Inter_700Bold',
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#00D3F3',
+    textDecorationLine: 'underline',
+  },
 });

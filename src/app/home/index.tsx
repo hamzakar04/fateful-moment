@@ -1,14 +1,21 @@
-import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, Platform, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { ScenarioCard } from '../../components/cards/ScenarioCard';
 import { NavigationBar } from '../../components/navigation/NavigationBar';
-import { Colors } from '../../constants/theme';
 import { MOCK_SCENARIOS } from '../../services/mockData';
 
 export default function ScenariosScreen() {
   const router = useRouter();
+  const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
+  const selectionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    if (selectionTimer.current) {
+      clearTimeout(selectionTimer.current);
+    }
+  }, []);
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -16,18 +23,31 @@ export default function ScenariosScreen() {
       <View style={styles.content}>
         <Text style={styles.navTitle}>Scenarios</Text>
         <Text style={styles.subtitle}>
-          Choose a scenario and ask yourself, "If you were in that situation, what would you do?"
+          Choose a scenario and ask yourself, &quot;If you were in that situation, what would you do?&quot;
         </Text>
         <Text style={styles.count}>30 Scenarios</Text>
         <FlatList
           horizontal
           data={MOCK_SCENARIOS}
           keyExtractor={(scenario) => scenario.id}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <ScenarioCard
               {...item}
-              active={index === 0}
-              onStart={() => router.push('/scenario/' + item.id)}
+              active={selectedScenarioId === null || selectedScenarioId === item.id}
+              onStart={() => {
+                if (selectedScenarioId !== null) {
+                  return;
+                }
+
+                setSelectedScenarioId(item.id);
+                selectionTimer.current = setTimeout(() => {
+                  router.push('/scenario/' + item.id);
+                  selectionTimer.current = setTimeout(() => {
+                    setSelectedScenarioId(null);
+                    selectionTimer.current = null;
+                  }, 500);
+                }, 2000);
+              }}
             />
           )}
           contentContainerStyle={styles.list}
@@ -42,11 +62,33 @@ export default function ScenariosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
-  content: { paddingTop: 16, paddingLeft: 66, paddingBottom: 32 },
-  navTitle: { color: Colors.text, fontFamily: 'Inter_700Bold', fontSize: 16, lineHeight: 28 },
-  subtitle: { color: Colors.primary, fontFamily: 'Inter_700Bold', fontSize: 12, lineHeight: 16, marginTop: 5, maxWidth: 630 },
-  count: { color: Colors.textMuted, fontFamily: 'Inter_500Medium', fontSize: 12, lineHeight: 16, marginTop: 14 },
+  container: { flex: 1, backgroundColor: '#020618' },
+  content: { paddingTop: 16, paddingLeft: 66, paddingBottom: 24 },
+  navTitle: {
+    color: '#E2E8F0',
+    fontFamily: 'Inter_700Bold',
+    fontSize: 20,
+    lineHeight: 20,
+    textTransform: 'capitalize',
+  },
+  subtitle: {
+    color: '#00D3F3',
+    fontFamily: Platform.select({ ios: 'Menlo', default: 'monospace' }),
+    fontWeight: '700',
+    fontSize: 12,
+    lineHeight: 16,
+    marginTop: 13,
+    maxWidth: 630,
+    textTransform: 'capitalize',
+  },
+  count: {
+    color: '#62748E',
+    fontFamily: 'Inter_900Black',
+    fontSize: 12,
+    lineHeight: 16,
+    marginTop: 14,
+    textTransform: 'capitalize',
+  },
   cardList: { flexGrow: 0 },
   list: { gap: 16, paddingTop: 8, paddingRight: 66 },
 });

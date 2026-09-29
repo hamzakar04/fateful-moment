@@ -7,6 +7,7 @@ import { Button } from '../../components/ui/Button';
 import { EmailIcon } from '../../components/ui/EmailIcon';
 import { Input } from '../../components/ui/Input';
 import { Colors, Layout, Typography } from '../../constants/theme';
+import { IPhoneChrome } from '../../components/system/IPhoneChrome';
 
 export default function ResetPasswordScreen() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function ResetPasswordScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <IPhoneChrome />
       <KeyboardAvoidingView style={styles.keyboard} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()} accessibilityLabel="Go back">
@@ -39,7 +41,7 @@ export default function ResetPasswordScreen() {
               onPress={() => {
                 if (canSubmit) router.push('/auth/check-email?email=' + encodeURIComponent(email.trim()));
               }}
-              variant="secondary"
+              variant="glass"
               style={[styles.submitButton, !canSubmit && styles.submitButtonDisabled]}
               textStyle={styles.submitText}
             />
@@ -54,13 +56,13 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background },
   keyboard: { flex: 1 },
   scrollContent: { flexGrow: 1, paddingHorizontal: 24, paddingTop: Layout.spacing.sm, paddingBottom: Layout.spacing.lg },
-  backButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
+  backButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', marginBottom: 10, transform: [{ translateY: 16 }] },
   header: { width: '100%', height: 241, alignItems: 'center', marginBottom: Layout.spacing.xl },
-  logo: { width: 148, height: 148, borderRadius: 74, marginBottom: 12 },
+  logo: { width: 148, height: 148, borderRadius: 74, marginBottom: 36 },
   title: { fontFamily: 'Inter_700Bold', fontSize: 20, lineHeight: 25, color: '#FFFFFF', textAlign: 'center' },
   subtitle: { ...Typography.bodyText, fontSize: 16, lineHeight: 20, color: Colors.textMuted, textAlign: 'center', marginTop: 8 },
   form: { gap: 0 },
-  submitButton: { height: 56, borderRadius: 16, marginTop: 16, backgroundColor: 'rgba(0, 211, 243, 0.14)', borderWidth: 1, borderColor: 'rgba(0, 211, 243, 0.48)', borderTopWidth: 1, borderTopColor: 'rgba(0, 211, 243, 0.48)' },
+  submitButton: { marginTop: 16 },
   submitButtonDisabled: { opacity: 0.55 },
   submitText: { color: Colors.primary, fontFamily: 'Inter_400Regular', fontSize: 16, lineHeight: 24 },
 });

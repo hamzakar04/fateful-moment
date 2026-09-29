@@ -4,6 +4,7 @@ export interface ScenarioItem {
   title: string;
   description: string;
   imageSource?: ReturnType<typeof require>;
+  videoSource?: ReturnType<typeof require>;
 }
 
 export const MOCK_SCENARIOS: ScenarioItem[] = [
@@ -11,28 +12,28 @@ export const MOCK_SCENARIOS: ScenarioItem[] = [
     id: 'iraq-war-1',
     duration: '1:37 min',
     title: 'Iraq War',
-    description: '2003. The chemical weapon allegations are on your desk. Your decision will determine the fate of millions.',
-    imageSource: require('../../assets/images/whitehouse.png'),
+    description: '2003. The Chemical Weapon Allegations Are On Your Desk. Your Decision Will Determine The Fate Of Millions.',
+    imageSource: require('../../assets/images/whitehouse_card.png'),
   },
   {
     id: 'cuban-crisis',
     duration: '1:25 min',
     title: 'Cuban Missile Crisis (1962)',
-    description: "A world on the brink of nuclear annihilation. You are in Kennedy's seat. What will you do?",
-    imageSource: require('../../assets/images/whitehouse.png'),
+    description: "A World On The Brink Of Nuclear Annihilation. You Are In Kennedy's Seat.",
+    imageSource: require('../../assets/images/whitehouse_card.png'),
   },
   {
     id: 'iraq-war-2',
     duration: '1:37 min',
     title: 'Iraq War',
-    description: '2003. The chemical weapon allegations are on your desk. Your decision will determine the fate of millions.',
-    imageSource: require('../../assets/images/whitehouse.png'),
+    description: '2003. The Chemical Weapon Allegations Are On Your Desk. Your Decision Will Determine The Fate Of Millions.',
+    imageSource: require('../../assets/images/whitehouse_card.png'),
   },
   {
     id: 'cuban-crisis-2',
     duration: '1:25 min',
     title: 'Cuban Missile Crisis (1962)',
-    description: "A world on the brink of nuclear annihilation. You are in Kennedy's seat. What will you do?",
-    imageSource: require('../../assets/images/whitehouse.png'),
+    description: "A World On The Brink Of Nuclear Annihilation. You Are In Kennedy's Seat.",
+    imageSource: require('../../assets/images/whitehouse_card.png'),
   },
 ];

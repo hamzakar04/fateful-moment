@@ -3,9 +3,14 @@ import { Image, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
+import { SvgXml } from 'react-native-svg';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { Colors, Layout, Typography } from '../../constants/theme';
+import { IPhoneChrome } from '../../components/system/IPhoneChrome';
+
+const checkCircleXml = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.99992 1.3335C4.32659 1.3335 1.33325 4.32683 1.33325 8.00016C1.33325 11.6735 4.32659 14.6668 7.99992 14.6668C11.6733 14.6668 14.6666 11.6735 14.6666 8.00016C14.6666 4.32683 11.6733 1.3335 7.99992 1.3335ZM11.1866 6.46683L7.40658 10.2468C7.31325 10.3402 7.18658 10.3935 7.05325 10.3935C6.91992 10.3935 6.79325 10.3402 6.69992 10.2468L4.81325 8.36016C4.61992 8.16683 4.61992 7.84683 4.81325 7.6535C5.00658 7.46016 5.32658 7.46016 5.51992 7.6535L7.05325 9.18683L10.4799 5.76016C10.6733 5.56683 10.9933 5.56683 11.1866 5.76016C11.3799 5.9535 11.3799 6.26683 11.1866 6.46683Z" fill="#00D3F3"/></svg>';
+const uncheckCircleXml = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.99992 1.3335C4.32659 1.3335 1.33325 4.32683 1.33325 8.00016C1.33325 11.6735 4.32659 14.6668 7.99992 14.6668C11.6733 14.6668 14.6666 11.6735 14.6666 8.00016C14.6666 4.32683 11.6733 1.3335 7.99992 1.3335ZM11.1866 6.46683L7.40658 10.2468C7.31325 10.3402 7.18658 10.3935 7.05325 10.3935C6.91992 10.3935 6.79325 10.3402 6.69992 10.2468L4.81325 8.36016C4.61992 8.16683 4.61992 7.84683 4.81325 7.6535C5.00658 7.46016 5.32658 7.46016 5.51992 7.6535L7.05325 9.18683L10.4799 5.76016C10.6733 5.56683 10.9933 5.56683 11.1866 5.76016C11.3799 5.9535 11.3799 6.26683 11.1866 6.46683Z" fill="#90A1B9"/></svg>';
 
 interface PasswordRule {
   label: string;
@@ -36,8 +41,9 @@ export default function SignUpScreen() {
     { label: 'Must contain at least 1 digit', valid: /[0-9]/.test(password) },
   ], [password]);
 
-  const canSubmit = fullName.trim().length > 0 && email.trim().length > 0 && passwordRules.every((rule) => rule.valid);
-  const fullNameError = touched.fullName && fullName.trim().length > 0 && fullName.trim().length < 3
+  const fullNameLength = fullName.trim().replace(/\s/g, '').length;
+  const canSubmit = fullNameLength >= 3 && email.trim().length > 0 && passwordRules.every((rule) => rule.valid);
+  const fullNameError = touched.fullName && fullName.trim().length > 0 && fullNameLength < 3
     ? 'Enter at least 3 characters.'
     : undefined;
   const emailError = touched.email && email.trim().length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
@@ -46,6 +52,7 @@ export default function SignUpScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <IPhoneChrome />
       <KeyboardAvoidingView style={styles.keyboard} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()} accessibilityLabel="Go back">
@@ -66,7 +73,7 @@ export default function SignUpScreen() {
               <View style={styles.rules}>
                 {passwordRules.map((rule) => (
                   <View key={rule.label} style={styles.rule}>
-                    <Feather name="check-circle" size={11} color={rule.valid ? Colors.primary : Colors.textMuted} />
+                    <SvgXml xml={rule.valid ? checkCircleXml : uncheckCircleXml} width={16} height={16} />
                     <Text style={[styles.ruleText, rule.valid && styles.ruleTextValid]}>{rule.label}</Text>
                   </View>
                 ))}
@@ -78,7 +85,7 @@ export default function SignUpScreen() {
               onPress={() => {
                 if (canSubmit) router.replace('/home');
               }}
-              variant="secondary"
+              variant="glass"
               style={[styles.submitButton, !canSubmit && styles.submitButtonDisabled]}
               textStyle={styles.submitText}
             />
@@ -100,16 +107,16 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.background },
   keyboard: { flex: 1 },
   scrollContent: { flexGrow: 1, paddingHorizontal: 24, paddingTop: Layout.spacing.sm, paddingBottom: Layout.spacing.lg },
-  backButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
+  backButton: { width: 40, height: 40, borderRadius: 20, backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', marginBottom: 10, transform: [{ translateY: 16 }] },
   header: { width: '100%', height: 234, alignItems: 'center', marginBottom: Layout.spacing.xl },
-  logo: { width: 148, height: 148, borderRadius: 74, marginBottom: 12 },
+  logo: { width: 148, height: 148, borderRadius: 74, marginBottom: 36 },
   title: { width: '100%', height: 50, fontFamily: 'Inter_700Bold', fontSize: 20, lineHeight: 25, letterSpacing: 0, color: '#FFFFFF', textAlign: 'center' },
   form: { gap: 5},
   rules: { marginTop: -4, marginBottom: Layout.spacing.md, gap: 3 },
   rule: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   ruleText: { fontFamily: 'Inter_300Light', fontSize: 11, lineHeight: 16, color: '#62748E' },
   ruleTextValid: { color: Colors.text },
-  submitButton: { height: 56, borderRadius: 16, marginTop: 32, backgroundColor: 'rgba(0, 211, 243, 0.14)', borderWidth: 1, borderColor: 'rgba(0, 211, 243, 0.48)', borderTopWidth: 1, borderTopColor: 'rgba(0, 211, 243, 0.48)' },
+  submitButton: { marginTop: 32 },
   submitButtonDisabled: { opacity: 0.55 },
   submitText: { color: Colors.primary, fontFamily: 'Inter_400Regular', fontSize: 16, lineHeight: 24, opacity: 1, zIndex: 2 },
   footer: { flexDirection: 'row', justifyContent: 'center', marginTop: 48, paddingTop: 0 },

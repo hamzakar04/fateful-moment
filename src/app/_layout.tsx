@@ -1,29 +1,35 @@
 import { useEffect } from 'react';
-import { Platform } from 'react-native';
-import { Stack } from 'expo-router';
+import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
+import { Stack, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { 
   useFonts, 
   Inter_400Regular, 
   Inter_300Light,
   Inter_500Medium,
   Inter_700Bold, 
-  Inter_900Black 
+  Inter_900Black,
+  Inter_900Black_Italic,
 } from '@expo-google-fonts/inter';
 import { Colors } from '../constants/theme';
 import * as SplashScreen from 'expo-splash-screen';
-import * as NavigationBar from 'expo-navigation-bar';
+import { NavigationBar } from 'expo-navigation-bar';
+import * as SystemUI from 'expo-system-ui';
 
 SplashScreen.preventAutoHideAsync();
+SystemUI.setBackgroundColorAsync(Colors.background);
 
 export default function RootLayout() {
+  const segments = useSegments();
+  const isScenario = segments[0] === 'scenario';
+  const isAppFlow = segments[0] === 'home' || isScenario;
   const [fontsLoaded, fontError] = useFonts({
     Inter_400Regular,
     Inter_300Light,
     Inter_500Medium,
     Inter_700Bold,
     Inter_900Black,
+    Inter_900Black_Italic,
   });
 
   useEffect(() => {
@@ -34,9 +40,14 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (Platform.OS === 'android') {
-      NavigationBar.setVisibilityAsync('hidden');
+      try {
+        NavigationBar.setStyle('light');
+        NavigationBar.setHidden(isScenario);
+      } catch {
+        // ignore
+      }
     }
-  }, []);
+  }, [isScenario]);
 
   if (!fontsLoaded && !fontError) {
     return (
@@ -47,11 +58,19 @@ export default function RootLayout() {
   }
 
   return (
-    <>
-      <StatusBar style="light" />
+    <View style={styles.root}>
+      {Platform.OS === 'android' && (
+        <NavigationBar style="light" hidden={isScenario} />
+      )}
+      <StatusBar
+        hidden={isAppFlow || Platform.OS === 'ios'}
+        style="light"
+      />
       <Stack
         screenOptions={{
           headerShown: false,
+          navigationBarHidden: isScenario,
+          navigationBarColor: Colors.background,
           headerStyle: {
             backgroundColor: Colors.background,
           },
@@ -62,13 +81,23 @@ export default function RootLayout() {
           },
         }}
       >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false, orientation: 'portrait' }} />
+        <Stack.Screen name="auth/sign-in" options={{ headerShown: false, orientation: 'portrait' }} />
+        <Stack.Screen name="auth/sign-up" options={{ headerShown: false, orientation: 'portrait' }} />
+        <Stack.Screen name="auth/reset-password" options={{ headerShown: false, orientation: 'portrait' }} />
+        <Stack.Screen name="auth/check-email" options={{ headerShown: false, orientation: 'portrait' }} />
+        <Stack.Screen name="home" options={{ headerShown: false, orientation: 'landscape' }} />
+        <Stack.Screen name="scenario/[id]" options={{ headerShown: false, orientation: 'landscape' }} />
       </Stack>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   loadingContainer: {
     flex: 1,
     backgroundColor: Colors.background,

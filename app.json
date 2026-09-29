@@ -6,16 +6,20 @@
     "scheme": "fatefulmoment",
     "orientation": "default",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#020618",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "navigationBar": {
+        "backgroundColor": "#020618",
+        "barStyle": "light-content"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -29,7 +33,7 @@
       [
         "expo-navigation-bar",
         {
-          "hidden": true,
+          "hidden": false,
           "enforceContrast": false,
           "style": "dark"
         }

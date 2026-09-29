@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, SafeAreaView, StatusBar } from 'react-native';
+import { useVideoPlayer } from 'expo-video';
 import { ScenarioCard } from '../../components/cards/ScenarioCard';
 import { MOCK_SCENARIOS, ScenarioItem } from '../../services/mockData';
 import { styles } from './ScenariosScreen.styles';
@@ -9,11 +10,18 @@ interface ScenariosScreenProps {
 }
 
 export const ScenariosScreen: React.FC<ScenariosScreenProps> = ({ onSelectScenario }) => {
+  const sharedVideoPlayer = useVideoPlayer(require('../../../assets/videos/iraq_war_video.mp4'), (player) => {
+    player.loop = true;
+    player.muted = true;
+    player.play();
+  });
+
   const renderItem = ({ item }: { item: ScenarioItem }) => (
     <ScenarioCard
       duration={item.duration}
       title={item.title}
       description={item.description}
+      player={sharedVideoPlayer}
       onStart={() => onSelectScenario(item)}
     />
   );

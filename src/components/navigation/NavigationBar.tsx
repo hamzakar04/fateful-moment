@@ -32,7 +32,15 @@ export function NavigationBar({
   const isMusicPlayer = !showTitle && !showLeadingIcon && !showTrailingIcon;
 
   return (
-    <View style={[styles.container, isMusicPlayer && styles.musicContainer, !showBottomBorder && styles.noBorder, transparent && styles.transparent, overlay && styles.overlay]}>
+    <View
+      style={[
+        styles.container,
+        isMusicPlayer && styles.musicContainer,
+        !showBottomBorder && styles.noBorder,
+        transparent && styles.transparent,
+        overlay && styles.overlay,
+      ]}
+    >
       {isMusicPlayer ? (
         <MusicPlayer />
       ) : (
@@ -40,7 +48,7 @@ export function NavigationBar({
           <View style={styles.side}>
             {showLeadingIcon && (
               <Pressable accessibilityRole="button" onPress={onLeadingPress} hitSlop={10}>
-                <Feather name={leadingIcon} size={20} color={Colors.text} />
+                <Feather name={leadingIcon} size={24} color="#E2E8F0" />
               </Pressable>
             )}
           </View>
@@ -65,16 +73,33 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     borderBottomWidth: 1,
     borderBottomColor: '#314158',
-    paddingHorizontal: 16,
+    paddingHorizontal: 32,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    zIndex: 10,
   },
-  musicContainer: { paddingHorizontal: 0, position: 'relative' },
-  noBorder: { borderBottomWidth: 0 },
+  musicContainer: {
+    paddingHorizontal: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#314158',
+  },
+  noBorder: {
+    borderBottomWidth: 0,
+    borderBottomColor: 'transparent',
+  },
   transparent: { backgroundColor: 'transparent' },
-  overlay: { position: 'absolute', top: 0, left: 0, zIndex: 10, elevation: 0, backgroundColor: 'transparent', borderBottomWidth: 0, borderBottomColor: 'transparent', shadowOpacity: 0 },
-  side: { width: 32, alignItems: 'flex-start' },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    elevation: 0,
+    backgroundColor: 'transparent',
+    shadowOpacity: 0,
+  },
+  side: { width: 24, height: 24, justifyContent: 'center', alignItems: 'center' },
   trailing: { alignItems: 'flex-end' },
   title: { color: Colors.text, fontFamily: 'Inter_700Bold', fontSize: 16, lineHeight: 24, textAlign: 'center' },
 });
