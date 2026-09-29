@@ -301,7 +301,7 @@ export default function ScenarioScreen() {
           showTrailingIcon={false}
           leadingIcon="arrow-left"
           onLeadingPress={goBack}
-          showBottomBorder
+          showBottomBorder={mode !== 'options'}
           transparent={mode === 'options'}
           overlay={mode === 'options'}
         />
@@ -357,7 +357,7 @@ export default function ScenarioScreen() {
             showTrailingIcon={false}
             leadingIcon="arrow-left"
             onLeadingPress={goBack}
-            showBottomBorder
+            showBottomBorder={false}
             transparent
             overlay
           />

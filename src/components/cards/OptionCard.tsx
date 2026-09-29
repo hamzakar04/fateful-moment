@@ -1,7 +1,7 @@
-import React, { useId } from 'react';
+import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Defs, G, LinearGradient as SvgLinearGradient, Rect, Stop } from 'react-native-svg';
+import Svg, { G, Rect } from 'react-native-svg';
 
 export type OptionCardVariant = 'default' | 'selected' | 'passive';
 
@@ -17,55 +17,41 @@ interface OptionCardProps {
 const CARD_WIDTH = 345;
 const CARD_HEIGHT = 66;
 
-const SELECTED_GRADIENT_COLORS = [
-  'rgba(15, 23, 43, 0.63)',
-  'rgba(0, 211, 243, 0.63)',
-  'rgba(15, 23, 43, 0.63)',
-] as const;
-
-/* Figma: ~4 wide diagonal sheens across 345px, not dense hatch. */
-const STRIPE_WIDTH = 72;
-const STRIPE_XS = [-28, 62, 152, 242, 332];
-
+/**
+ * Parallelogram glass sheen overlay — matches Figma layer stack:
+ *   1. Bottom: tiled pattern rects (#D9D9D9, 0.36 opacity)
+ *   2. Top: linear gradient (#0F172B → #00D3F3 → #0F172B, 0.63 opacity)
+ * The gradient partially covers the pattern, creating subtle diagonal light streaks.
+ */
 function SelectedGlassFill() {
-  const rawId = useId();
-  const stripeId = `optionStripe_${rawId.replace(/[^a-zA-Z0-9]/g, '_')}`;
-
   return (
     <View style={styles.selectedFill} pointerEvents="none">
-      <LinearGradient
-        colors={SELECTED_GRADIENT_COLORS}
-        locations={[0, 0.5, 1]}
-        start={{ x: 0, y: 0.4894 }}
-        end={{ x: 1, y: 0.5106 }}
-        style={StyleSheet.absoluteFill}
-      />
+      {/* Layer 1 (bottom): Parallelogram pattern — #D9D9D9 rects at 0.36 opacity */}
       <Svg
         width={CARD_WIDTH}
         height={CARD_HEIGHT}
         viewBox={`0 0 ${CARD_WIDTH} ${CARD_HEIGHT}`}
         style={StyleSheet.absoluteFill}
       >
-        <Defs>
-          <SvgLinearGradient id={stripeId} x1="0" y1="0" x2="1" y2="0">
-            <Stop offset="0" stopColor="#FFFFFF" stopOpacity="0" />
-            <Stop offset="0.5" stopColor="#E8FCFF" stopOpacity="0.32" />
-            <Stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
-          </SvgLinearGradient>
-        </Defs>
-        <G transform={`rotate(18 ${CARD_WIDTH / 2} ${CARD_HEIGHT / 2})`}>
-          {STRIPE_XS.map((x) => (
-            <Rect
-              key={x}
-              x={x}
-              y={-80}
-              width={STRIPE_WIDTH}
-              height={240}
-              fill={`url(#${stripeId})`}
-            />
-          ))}
+        <G opacity={0.36}>
+          {/* ~68×102 rects, rotated 23°, spaced ~138px apart, origin y=-27 */}
+          <Rect x={23} y={-27} width={68} height={102} fill="#D9D9D9" transform="rotate(23 23 -27)" />
+          <Rect x={161} y={-27} width={68} height={102} fill="#D9D9D9" transform="rotate(23 161 -27)" />
+          <Rect x={299} y={-27} width={68} height={102} fill="#D9D9D9" transform="rotate(23 299 -27)" />
         </G>
       </Svg>
+      {/* Layer 2 (top): Gradient overlay — Figma: 91.21deg, #0F172B → #00D3F3 → #0F172B at 0.63 */}
+      <LinearGradient
+        colors={[
+          'rgba(15, 23, 43, 0.63)',
+          'rgba(0, 211, 243, 0.63)',
+          'rgba(15, 23, 43, 0.63)',
+        ]}
+        locations={[0, 0.5, 1]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0.58 }}
+        style={StyleSheet.absoluteFill}
+      />
     </View>
   );
 }
