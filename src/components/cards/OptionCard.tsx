@@ -63,6 +63,7 @@ export function OptionCard({
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityState={{ selected: isSelectedState }}
       onPress={onPress}
       style={[
         styles.card,

@@ -41,6 +41,8 @@ export function InteractiveSelection({
               ]}
               onPress={() => onSelect(option.id)}
               activeOpacity={0.8}
+              accessibilityRole="radio"
+              accessibilityState={{ selected: isSelected }}
             >
               <Text 
                 style={[

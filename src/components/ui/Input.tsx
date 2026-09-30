@@ -49,6 +49,8 @@ export function Input({ label, error, isPassword, showLabel = true, compact = fa
           <TouchableOpacity 
             style={styles.eyeIcon} 
             onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            accessibilityLabel={isPasswordVisible ? 'Hide password' : 'Show password'}
+            accessibilityRole="button"
           >
             <Feather 
               name={isPasswordVisible ? "eye-off" : "eye"} 
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
   },
   inputContainerError: {
-    borderColor: '#E53A3A',
+    borderColor: Colors.error,
   },
   input: {
     flex: 1,
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_300Light',
     fontSize: 11,
     lineHeight: 16,
-    color: '#E53A3A',
+    color: Colors.error,
     marginTop: 4,
   }
 });

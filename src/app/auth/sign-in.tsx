@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
 import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
+import { AuthLayout } from '../../components/auth/AuthLayout';
+import { isValidEmail } from '../../utils/validators';
 import { Colors, Layout } from '../../constants/theme';
-import { IPhoneChrome } from '../../components/system/IPhoneChrome';
 
 import { MOCK_USER } from '../../services/mockData';
 
@@ -17,7 +16,7 @@ export default function SignInScreen() {
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordError, setPasswordError] = useState<string | undefined>(undefined);
 
-  const emailError = emailTouched && email.trim().length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+  const emailError = emailTouched && email.trim().length > 0 && !isValidEmail(email)
     ? 'Please enter a valid email address.'
     : undefined;
   const canSubmit = email.trim().length > 0 && password.length > 0 && !emailError;
@@ -26,9 +25,6 @@ export default function SignInScreen() {
     if (!canSubmit) return;
 
     const normalizedEmail = email.trim().toLowerCase();
-
-    // Mock User Doğrulaması (Figma Wrong Password case)
-    // Kayıtlı mock kullanıcı: johndoe@gmail.com veya johndoe@mail.com / Johndoe123
     const isMockEmail = normalizedEmail === MOCK_USER.email.toLowerCase() || normalizedEmail === 'johndoe@mail.com';
 
     if (isMockEmail) {
@@ -46,82 +42,67 @@ export default function SignInScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <IPhoneChrome />
-      <KeyboardAvoidingView style={styles.keyboard} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-          <TouchableOpacity style={styles.backButton} onPress={() => router.back()} accessibilityLabel="Go back">
-            <Feather name="arrow-left" size={20} color={Colors.textMuted} />
-          </TouchableOpacity>
+    <AuthLayout title="Welcome to Fateful Moment" subtitle="Sign in with Email">
+      <View style={styles.form}>
+        <Input
+          label="Your email address"
+          showLabel={false}
+          compact
+          placeholder="Your email address"
+          placeholderTextColor="#62748E"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          error={emailError}
+          onChangeText={(text) => {
+            setEmail(text);
+            if (passwordError) setPasswordError(undefined);
+          }}
+          onBlur={() => setEmailTouched(true)}
+        />
+        <Input
+          label="Your password"
+          showLabel={false}
+          compact
+          placeholder="Your password"
+          placeholderTextColor="#62748E"
+          isPassword
+          value={password}
+          error={passwordError}
+          onChangeText={(text) => {
+            setPassword(text);
+            if (passwordError) setPasswordError(undefined);
+          }}
+        />
 
-          <View style={styles.header}>
-            <Image source={require('../../../assets/images/fateful_moment_signup_logo_.png')} style={styles.logo} resizeMode="contain" />
-            <Text style={styles.title}>Welcome to Fateful Moment</Text>
-            <Text style={styles.subtitle}>Sign in with Email</Text>
-          </View>
+        <Button
+          title="Sign In"
+          onPress={handleSignIn}
+          variant="glass"
+          disabled={!canSubmit}
+          style={styles.submitButton}
+          textStyle={styles.submitText}
+        />
 
-          <View style={styles.form}>
-            <Input
-              label="Your email address"
-              showLabel={false}
-              compact
-              placeholder="Your email address"
-              placeholderTextColor="#62748E"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              value={email}
-              error={emailError}
-              onChangeText={(text) => {
-                setEmail(text);
-                if (passwordError) setPasswordError(undefined);
-              }}
-              onBlur={() => setEmailTouched(true)}
-            />
-            <Input
-              label="Your password"
-              showLabel={false}
-              compact
-              placeholder="Your password"
-              placeholderTextColor="#62748E"
-              isPassword
-              value={password}
-              error={passwordError}
-              onChangeText={(text) => {
-                setPassword(text);
-                if (passwordError) setPasswordError(undefined);
-              }}
-            />
+        <TouchableOpacity style={styles.forgotButton} onPress={() => router.push('/auth/reset-password')}>
+          <Text style={styles.forgotText}>Forgot password?</Text>
+        </TouchableOpacity>
+      </View>
 
-            <Button
-              title="Sign In"
-              onPress={handleSignIn}
-              variant="glass"
-              disabled={!canSubmit}
-              style={styles.submitButton}
-              textStyle={styles.submitText}
-            />
-
-            <TouchableOpacity style={styles.forgotButton} onPress={() => router.push('/auth/reset-password')}>
-              <Text style={styles.forgotText}>Forgot password?</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>No account yet? </Text>
-            <TouchableOpacity onPress={() => router.replace('/auth/sign-up')}>
-              <Text style={styles.footerLink}>Sign up</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>No account yet? </Text>
+        <TouchableOpacity onPress={() => router.replace('/auth/sign-up')}>
+          <Text style={styles.footerLink}>Sign up</Text>
+        </TouchableOpacity>
+      </View>
+    </AuthLayout>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#020618',
+    backgroundColor: Colors.background,
   },
   keyboard: {
     flex: 1,
@@ -160,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 25,
     letterSpacing: 0,
-    color: '#FFFFFF',
+    color: Colors.text,
     textAlign: 'center',
   },
   subtitle: {
@@ -168,7 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     letterSpacing: 0,
-    color: '#90A1B9',
+    color: Colors.textMuted,
     textAlign: 'center',
     marginTop: 8,
   },
@@ -182,7 +163,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_500Medium',
     fontSize: 16,
     lineHeight: 24,
-    color: '#00D3F3',
+    color: Colors.primary,
     textAlign: 'center',
   },
   forgotButton: {
@@ -196,7 +177,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_400Regular',
     fontSize: 14,
     lineHeight: 20,
-    color: '#00D3F3',
+    color: Colors.primary,
     textAlign: 'center',
   },
   footer: {
@@ -211,13 +192,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_400Regular',
     fontSize: 14,
     lineHeight: 20,
-    color: '#90A1B9',
+    color: Colors.textMuted,
   },
   footerLink: {
     fontFamily: 'Inter_700Bold',
     fontSize: 14,
     lineHeight: 20,
-    color: '#00D3F3',
+    color: Colors.primary,
     textDecorationLine: 'underline',
   },
 });

@@ -12,13 +12,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#020618",
+        "backgroundColor": "#020617",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "navigationBar": {
-        "backgroundColor": "#020618",
+        "backgroundColor": "#020617",
         "barStyle": "light-content"
       },
       "predictiveBackGestureEnabled": false

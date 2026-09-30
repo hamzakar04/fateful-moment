@@ -43,7 +43,7 @@ export default function RootLayout() {
       try {
         NavigationBar.setStyle('light');
         NavigationBar.setHidden(isScenario);
-      } catch {}
+      } catch (err) { console.warn('Failed to set NavigationBar style:', err); }
     }
   }, [isScenario]);
 

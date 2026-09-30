@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border,
   },
   glassContainer: {
-    backgroundColor: 'rgba(0, 211, 243, 0.14)',
+    backgroundColor: 'rgba(0, 184, 219, 0.14)',
   },
   glassDisabledContainer: {
-    backgroundColor: 'rgba(0, 211, 243, 0.14)',
+    backgroundColor: 'rgba(0, 184, 219, 0.14)',
   },
   glassFrostedContainer: {
-    backgroundColor: 'rgba(0, 211, 243, 0.14)',
+    backgroundColor: 'rgba(0, 184, 219, 0.14)',
   },
   glassText: {
     fontFamily: 'Inter_700Bold',

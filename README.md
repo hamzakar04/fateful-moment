@@ -85,44 +85,52 @@ Auth Landing → Sign In / Sign Up → Home (Landscape)
 src/
 ├── app/                          # Expo Router screens (file-based routing)
 │   ├── _layout.tsx               # Root Stack navigator with font loading & platform config
-│   ├── index.tsx                  # Auth landing screen (Welcome page)
+│   ├── index.tsx                 # Auth landing screen (Welcome page)
 │   ├── home/
 │   │   └── index.tsx             # Scenarios home screen (landscape)
 │   ├── scenario/
-│   │   └── [id].tsx              # Briefing → Video → Options → DNA flow
+│   │   └── [id].tsx              # Scenario orchestrator (Briefing → Video → Options → DNA)
 │   ├── result/
-│   │   └── [id].tsx              # Result screen (standalone route)
+│   │   └── [id].tsx              # Standalone result screen route
 │   └── auth/
 │       ├── sign-in.tsx           # Email/password sign in
-│       ├── sign-up.tsx           # Registration with password validation
+│       ├── sign-up.tsx           # Registration with password validation rules
 │       ├── reset-password.tsx    # Password reset request
 │       └── check-email.tsx       # Reset confirmation
 │
 ├── components/
+│   ├── auth/
+│   │   ├── AuthLayout.tsx        # Shared layout wrapper for auth screens (DRY)
+│   │   └── SocialAuthButtons.tsx # Google/Apple/Email social login buttons
 │   ├── cards/
-│   │   ├── ScenarioCard.tsx      # Scenario card with video background
-│   │   ├── OptionCard.tsx        # Decision option with glass-fill animation
+│   │   ├── ScenarioCard.tsx      # Scenario card with optimized video background
+│   │   ├── OptionCard.tsx        # Decision option card with selection animation
 │   │   ├── StandardCard.tsx      # Generic HUD-style card
-│   │   └── InteractiveSelection.tsx  # Radio-style option selector
+│   │   └── InteractiveSelection.tsx # Accessible radio option selector
 │   ├── navigation/
 │   │   ├── NavigationBar.tsx     # Top navigation bar
-│   │   └── MusicPlayer.tsx       # Floating music player UI
+│   │   └── MusicPlayer.tsx       # Floating music player HUD UI
+│   ├── scenario/
+│   │   ├── BriefingView.tsx      # Scenario briefing card & mission overview
+│   │   ├── OptionsView.tsx       # Multi-round decision options layout (DRY)
+│   │   ├── DNAResultView.tsx     # Decision DNA psychological matrix & radar chart
+│   │   └── ScenarioIcons.tsx     # Scenario-specific HUD and metric SVG icons
 │   ├── system/
-│   │   └── IPhoneChrome.tsx      # iOS status bar chrome (design fidelity)
+│   │   └── IPhoneChrome.tsx      # iOS status bar chrome for design fidelity
 │   └── ui/
 │       ├── Button.tsx            # Multi-variant button (primary/secondary/glass/danger)
-│       ├── Input.tsx             # Form input with validation states
+│       ├── Input.tsx             # Form input with validation states & password toggle
 │       ├── EmailIcon.tsx         # SVG email icon
 │       └── SuccessIcon.tsx       # SVG success checkmark icon
 │
 ├── constants/
-│   └── theme.ts                  # Colors, Typography, Layout tokens
+│   └── theme.ts                  # Colors, Typography, Layout design tokens
 │
-├── screens/                      # Legacy screen (kept for reference)
-│   └── Scenarios/
+├── services/
+│   └── mockData.ts               # Scenario dummy data & TypeScript interfaces
 │
-└── services/
-    └── mockData.ts               # Dummy scenario data with TypeScript interfaces
+└── utils/
+    └── validators.ts             # Form validation utilities (email format regex, etc.)
 ```
 
 ---
@@ -292,6 +300,62 @@ Karşılama → Giriş / Kayıt → Ana Ekran (Yatay)
                      Video Simülasyon (Karar 2)
                                   ↓
                         Karar DNA'sı Sonucu
+```
+
+---
+
+## Proje Mimarisi & Dizin Yapısı
+
+```
+src/
+├── app/                          # Expo Router ekranları (dosya tabanlı yönlendirme)
+│   ├── _layout.tsx               # Kök Stack navigator, font yükleme ve platform ayarları
+│   ├── index.tsx                 # Karşılama ekranı (Welcome)
+│   ├── home/
+│   │   └── index.tsx             # Senaryolar ana ekranı (yatay mod)
+│   ├── scenario/
+│   │   └── [id].tsx              # Senaryo orkestratörü (Brifing → Video → Seçenekler → DNA)
+│   ├── result/
+│   │   └── [id].tsx              # Bağımsız sonuç ekranı rotası
+│   └── auth/
+│       ├── sign-in.tsx           # E-posta/şifre ile giriş ekranı
+│       ├── sign-up.tsx           # Şifre kuralları doğrulamalı kayıt ekranı
+│       ├── reset-password.tsx    # Şifre sıfırlama talep ekranı
+│       └── check-email.tsx       # Sıfırlama onay ekranı
+│
+├── components/
+│   ├── auth/
+│   │   ├── AuthLayout.tsx        # Kimlik doğrulama ekranları için ortak şablon (DRY)
+│   │   └── SocialAuthButtons.tsx # Google/Apple/Email sosyal giriş butonları
+│   ├── cards/
+│   │   ├── ScenarioCard.tsx      # Video arkaplanlı optimize senaryo kartı
+│   │   ├── OptionCard.tsx        # Cam dolgu animasyonlu karar seçeneği kartı
+│   │   ├── StandardCard.tsx      # Genel HUD tarzı kart bileşeni
+│   │   └── InteractiveSelection.tsx # Erişilebilir radyo seçim bileşeni
+│   ├── navigation/
+│   │   ├── NavigationBar.tsx     # Üst navigasyon çubuğu
+│   │   └── MusicPlayer.tsx       # Yüzen HUD müzik çalar arayüzü
+│   ├── scenario/
+│   │   ├── BriefingView.tsx      # Senaryo brifing ve görev kartı
+│   │   ├── OptionsView.tsx       # Çok turlu karar seçenekleri grid görünümü
+│   │   ├── DNAResultView.tsx     # Karar DNA'sı psikolojik matrisi ve radar grafiği
+│   │   └── ScenarioIcons.tsx     # Senaryo HUD ve metrik SVG ikonları
+│   ├── system/
+│   │   └── IPhoneChrome.tsx      # Tasarım sadakati için iOS durum çubuğu çerçevesi
+│   └── ui/
+│       ├── Button.tsx            # Çok varyantlı buton (primary/secondary/glass/danger)
+│       ├── Input.tsx             # Form girdisi, doğrulama durumları ve şifre görünürlüğü
+│       ├── EmailIcon.tsx         # SVG e-posta ikonu
+│       └── SuccessIcon.tsx       # SVG onay işareti ikonu
+│
+├── constants/
+│   └── theme.ts                  # Renkler, Tipografi, Boşluk tasarım tokenları
+│
+├── services/
+│   └── mockData.ts               # Senaryo dummy verileri ve TypeScript tipleri
+│
+└── utils/
+    └── validators.ts             # Form doğrulama fonksiyonları (e-posta regex vb.)
 ```
 
 ---

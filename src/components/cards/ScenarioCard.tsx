@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useVideoPlayer, VideoView } from 'expo-video';
+import { useVideoPlayer, VideoView, VideoPlayer as VideoPlayerType, VideoSource } from 'expo-video';
 import { Button } from '../ui/Button';
 import { Colors } from '../../constants/theme';
 
@@ -24,8 +24,8 @@ interface ScenarioCardProps {
   title: string;
   description: string;
   imageSource?: ImageSourcePropType;
-  videoSource?: any;
-  player?: any;
+  videoSource?: VideoSource;
+  player?: VideoPlayerType;
   active?: boolean;
   isVisible?: boolean;
   isMuted?: boolean;
@@ -34,8 +34,8 @@ interface ScenarioCardProps {
 }
 
 interface ScenarioCardVideoProps {
-  videoSource: any;
-  customPlayer?: any;
+  videoSource: VideoSource;
+  customPlayer?: VideoPlayerType;
   active: boolean;
   isMuted: boolean;
 }
@@ -68,13 +68,13 @@ const ScenarioCardVideo: React.FC<ScenarioCardVideoProps> = ({
       player.play();
     }
 
-    const playingSub = player.addListener('playingChange', (event: any) => {
+    const playingSub = player.addListener('playingChange', (event: { isPlaying: boolean }) => {
       if (!event.isPlaying && active) {
         player.play();
       }
     });
 
-    const statusSub = player.addListener('statusChange', (event: any) => {
+    const statusSub = player.addListener('statusChange', (event: { status: string }) => {
       if (event.status === 'readyToPlay' && active) {
         player.play();
       }
@@ -83,9 +83,6 @@ const ScenarioCardVideo: React.FC<ScenarioCardVideoProps> = ({
     return () => {
       playingSub.remove();
       statusSub.remove();
-      try {
-        player.pause();
-      } catch {}
     };
   }, [active, isMuted, player]);
 

@@ -5,6 +5,10 @@ import { useRouter } from 'expo-router';
 import { ScenarioCard } from '../../components/cards/ScenarioCard';
 import { NavigationBar } from '../../components/navigation/NavigationBar';
 import { MOCK_SCENARIOS } from '../../services/mockData';
+import { Colors } from '../../constants/theme';
+
+const SCENARIO_TRANSITION_DELAY_MS = 2000;
+const NAVIGATION_DEBOUNCE_MS = 500;
 
 const VIEWABILITY_CONFIG = {
   itemVisiblePercentThreshold: 50,
@@ -16,7 +20,6 @@ export default function ScenariosScreen() {
   const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
   const selectionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Ekranda odaklanan ve videosu oynatılan ilk 2-3 kart
   const [visibleIds, setVisibleIds] = useState<string[]>([
     MOCK_SCENARIOS[0].id,
     MOCK_SCENARIOS[1].id,
@@ -28,7 +31,6 @@ export default function ScenariosScreen() {
       const ids = viewableItems
         .filter((v) => v.isViewable)
         .map((v) => String(v.key));
-      // Ekranda tam görünen ilk 2-3 kartın videosunu başlat, diğerlerini poster moduna al
       setVisibleIds(ids.slice(0, 3));
     },
     []
@@ -72,8 +74,8 @@ export default function ScenariosScreen() {
                   selectionTimer.current = setTimeout(() => {
                     setSelectedScenarioId(null);
                     selectionTimer.current = null;
-                  }, 500);
-                }, 2000);
+                  }, NAVIGATION_DEBOUNCE_MS);
+                }, SCENARIO_TRANSITION_DELAY_MS);
               }}
             />
           )}
@@ -91,7 +93,7 @@ export default function ScenariosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#020618' },
+  container: { flex: 1, backgroundColor: Colors.background },
   content: { paddingTop: 16, paddingLeft: 66, paddingBottom: 24 },
   navTitle: {
     color: '#E2E8F0',
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
   },
   subtitle: {
-    color: '#00D3F3',
+    color: Colors.primary,
     fontFamily: Platform.select({ ios: 'Menlo', default: 'monospace' }),
     fontWeight: '700',
     fontSize: 12,
