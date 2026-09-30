@@ -14,14 +14,14 @@
       "adaptiveIcon": {
         "backgroundColor": "#020617",
         "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundImage": "./assets/android-icon-background.png"
       },
       "navigationBar": {
         "backgroundColor": "#020617",
         "barStyle": "light-content"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.hamzakar04.fatefulmoment"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,6 +39,18 @@
         }
       ],
       "expo-video"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "expo-navigation-bar": {
+        "enforceContrast": false,
+        "style": "dark",
+        "hidden": false
+      },
+      "eas": {
+        "projectId": "140cc595-2900-4d7f-8fec-2c2ca9ae8c43"
+      }
+    },
+    "owner": "hamzakar04"
   }
 }
