@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { Colors, Typography, Layout } from '../../constants/theme';
-import { Feather } from '@expo/vector-icons';
 
 interface StandardCardProps {
   hudText?: string;

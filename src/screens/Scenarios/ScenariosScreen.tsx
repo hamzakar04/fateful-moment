@@ -33,7 +33,7 @@ export const ScenariosScreen: React.FC<ScenariosScreenProps> = ({ onSelectScenar
         <View style={styles.headerContainer}>
           <Text style={styles.mainTitle}>Scenarios</Text>
           <Text style={styles.subTitle}>
-            Choose A Scenario And Ask Yourself, "If You Were In That Situation, What Would You Do?"
+            Choose A Scenario And Ask Yourself, &quot;If You Were In That Situation, What Would You Do?&quot;
           </Text>
           <Text style={styles.counterBadge}>30 Scenarios</Text>
         </View>

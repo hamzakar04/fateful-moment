@@ -25,7 +25,7 @@ export default function CheckEmailScreen() {
           <View style={styles.iconDisc}><SuccessIcon /></View>
           <Text style={styles.title}>Check Your Email</Text>
           <Text style={styles.description}>
-            We've sent password reset instructions to <Text style={styles.email}>{submittedEmail}</Text>
+            We&apos;ve sent password reset instructions to <Text style={styles.email}>{submittedEmail}</Text>
           </Text>
           <Button title="Back to Sign in" onPress={() => router.replace('/auth/sign-in')} variant="glass" style={styles.button} textStyle={styles.buttonText} />
         </View>

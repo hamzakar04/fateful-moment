@@ -37,7 +37,7 @@ export default function ResetPasswordScreen() {
           <View style={styles.form}>
             <Input label="Your email address" showLabel={false} compact placeholder="Your email address" leadingIcon={<EmailIcon />} keyboardType="email-address" autoCapitalize="none" value={email} error={emailError} onChangeText={setEmail} onBlur={() => setTouched(true)} />
             <Button
-              title="Sign In"
+              title="Send Reset Link"
               onPress={() => {
                 if (canSubmit) router.push('/auth/check-email?email=' + encodeURIComponent(email.trim()));
               }}

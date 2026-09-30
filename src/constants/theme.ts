@@ -1,4 +1,4 @@
-import { Platform, TextStyle, ViewStyle } from 'react-native';
+import { Platform, TextStyle } from 'react-native';
 
 export const Colors = {
   primary: '#00D3F3',

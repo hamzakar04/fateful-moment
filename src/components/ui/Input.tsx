@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TextInputProps, TouchableOpacity } from 'react-native';
-import { Colors, Typography, Layout } from '../../constants/theme';
+import { Colors, Layout } from '../../constants/theme';
 import { Feather } from '@expo/vector-icons';
 
 interface InputProps extends TextInputProps {

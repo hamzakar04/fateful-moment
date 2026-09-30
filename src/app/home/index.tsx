@@ -1,15 +1,38 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Platform, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FlatList, Platform, StyleSheet, Text, View, ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { ScenarioCard } from '../../components/cards/ScenarioCard';
 import { NavigationBar } from '../../components/navigation/NavigationBar';
 import { MOCK_SCENARIOS } from '../../services/mockData';
 
+const VIEWABILITY_CONFIG = {
+  itemVisiblePercentThreshold: 50,
+  minimumViewTime: 50,
+};
+
 export default function ScenariosScreen() {
   const router = useRouter();
   const [selectedScenarioId, setSelectedScenarioId] = useState<string | null>(null);
   const selectionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Ekranda odaklanan ve videosu oynatılan ilk 2-3 kart
+  const [visibleIds, setVisibleIds] = useState<string[]>([
+    MOCK_SCENARIOS[0].id,
+    MOCK_SCENARIOS[1].id,
+    MOCK_SCENARIOS[2].id,
+  ]);
+
+  const onViewableItemsChanged = useCallback(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      const ids = viewableItems
+        .filter((v) => v.isViewable)
+        .map((v) => String(v.key));
+      // Ekranda tam görünen ilk 2-3 kartın videosunu başlat, diğerlerini poster moduna al
+      setVisibleIds(ids.slice(0, 3));
+    },
+    []
+  );
 
   useEffect(() => () => {
     if (selectionTimer.current) {
@@ -30,10 +53,14 @@ export default function ScenariosScreen() {
           horizontal
           data={MOCK_SCENARIOS}
           keyExtractor={(scenario) => scenario.id}
+          initialNumToRender={4}
+          maxToRenderPerBatch={4}
+          windowSize={5}
           renderItem={({ item }) => (
             <ScenarioCard
               {...item}
               active={selectedScenarioId === null || selectedScenarioId === item.id}
+              isVisible={visibleIds.includes(item.id)}
               onStart={() => {
                 if (selectedScenarioId !== null) {
                   return;
@@ -50,6 +77,8 @@ export default function ScenariosScreen() {
               }}
             />
           )}
+          viewabilityConfig={VIEWABILITY_CONFIG}
+          onViewableItemsChanged={onViewableItemsChanged}
           contentContainerStyle={styles.list}
           style={styles.cardList}
           showsHorizontalScrollIndicator={false}
