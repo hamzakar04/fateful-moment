@@ -186,40 +186,37 @@ Both commands pass with **zero errors** ✅
 
 ---
 
-## AI-Powered Development
+## AI-Powered Development & Engineering Workflow
 
 ### Tools Used
 
 | Tool | Purpose |
 |---|---|
-| **Google Antigravity (Claude Opus 4.6)** | Primary AI coding assistant — architecture planning, component implementation, Figma-to-code translation, code review, debugging, and documentation |
-| **Figma** | Design reference and asset extraction |
+| **Google Antigravity (Claude Opus 4.6 / Gemini 3.8)** | Primary AI pair-programming assistant — architecture planning, component implementation, Figma-to-code translation, automated code review, performance profiling, and documentation |
+| **Figma** | Design system reference and asset extraction |
 
-### How AI Was Used
+### How AI Was Integrated into the Workflow
 
-The development process was a **collaborative pair-programming** approach with AI:
+The development lifecycle embraced AI as an **end-to-end accelerator** while ensuring rigorous human oversight, critical code verification, and high software quality:
 
-1. **Figma Analysis & Architecture Planning** — AI analyzed the Figma design structure and proposed the file-based routing architecture, component hierarchy, and theme system before any code was written.
+1. **Architecture & End-to-End Ownership** — Analyzed the complete Figma user journey and established a scalable, file-based routing architecture (Expo Router), centralized design tokens, and modular folder structure before writing production code.
+2. **Rapid Prototyping & Code Verification** — Accelerated UI production with AI while reading, testing, and critically verifying every generated snippet:
+   - Pixel-perfect translation of Figma auto-layouts, custom gradients, and glass-morphism effects.
+   - Proactive resolution of mobile platform edge cases (Android edge-to-edge navigation bar, orientation locks, safe area insets).
+3. **Active Code Review & Continuous Improvement** — Conducted automated multi-agent code reviews to detect and refactor clean code violations:
+   - **Single Responsibility Principle (SRP):** Decomposed complex scenario flows into decoupled presentation and logic components (`BriefingView`, `OptionsView`, `DNAResultView`).
+   - **DRY & Reusability:** Unified auth views with a shared `AuthLayout` and centralized validation logic (`validators.ts`).
+   - **Strict Type Safety:** Eliminated all `any` usages and adopted native `expo-video` interfaces.
+4. **Mobile Performance & Resource Lifecycle** — Solved mobile-critical challenges:
+   - Intelligent `FlatList` viewability tracking to throttle background video instances and save device memory.
+   - Native C++ `SharedObject` lifecycle management, eliminating unmount runtime warnings.
+   - Accessibility (`a11y`) roles and state bindings for assistive technologies.
+5. **Quality Assurance & Verification Loop** — Zero reliance on unverified code: every commit is validated through automated typechecks (`npx tsc --noEmit`) and linting (`npx expo lint`), passing with 0 errors and 0 warnings.
 
-2. **Component-by-Component Implementation** — Each UI component was built iteratively:
-   - AI translated Figma design tokens (colors, typography, spacing) into a centralized theme system
-   - Complex visual elements (glass-morphism buttons, radar charts, SVG icons) were implemented by describing the Figma layer structure to the AI
-   - Cross-platform edge cases (Android navigation bar, iOS safe areas, font fallbacks) were identified and resolved collaboratively
+### Engineering Philosophy
 
-3. **Multi-Stage Simulation Flow** — The video playback state machine (briefing → intro video → options round 1 → decision video 1 → options round 2 → decision video 2 → DNA result) was designed and implemented with AI assistance, ensuring proper state transitions and video lifecycle management.
-
-4. **Code Review & Quality Assurance** — AI performed comprehensive code review covering:
-   - TypeScript type safety (strict mode enabled)
-   - Unused imports and dead code removal
-   - Lint error resolution
-   - Accessibility improvements
-   - Performance considerations (memoization, FlatList optimization)
-
-5. **Documentation** — This README was generated collaboratively.
-
-### AI Development Philosophy
-
-> AI was used as a **force multiplier**, not a replacement for understanding. Every AI-generated code suggestion was reviewed, understood, and validated before integration. The developer maintained ownership of architectural decisions while leveraging AI for implementation speed, cross-platform edge case discovery, and code quality assurance.
+> **"Produce fast with AI, verify rigorously with engineering discipline."**  
+> AI was integrated as a productivity multiplier, not an autopilot. Taking full end-to-end ownership meant reading every generated snippet, identifying edge cases, testing on native runtimes, and actively using code reviews to elevate code quality to production standards.
 
 ---
 
@@ -402,39 +399,36 @@ eas build --platform android --profile preview
 
 ---
 
-## Yapay Zeka Destekli Geliştirme
+## Yapay Zeka Destekli Geliştirme & Mühendislik Süreci
 
 ### Kullanılan Araçlar
 
 | Araç | Kullanım Amacı |
 |---|---|
-| **Google Antigravity (Claude Opus 4.6)** | Birincil AI kodlama asistanı — mimari planlama, komponent geliştirme, Figma'dan koda çeviri, kod inceleme, hata ayıklama ve dokümantasyon |
-| **Figma** | Tasarım referansı ve asset çıkarma |
+| **Google Antigravity (Claude Opus 4.6 / Gemini 3.8)** | Eşli programlama (pair-programming) asistanı — mimari planlama, komponent geliştirme, Figma'dan koda çeviri, otomatik code review, performans optimizasyonu ve dokümantasyon |
+| **Figma** | Tasarım sistemi referansı ve görsel varlık çıkarma |
 
-### AI Nasıl Kullanıldı?
+### Geliştirme Sürecine Entegrasyon
 
-Geliştirme süreci, AI ile **işbirlikçi eşli programlama** yaklaşımıyla yürütülmüştür:
+Geliştirme süreci, **"Yapay zekâ ile hızlı üret, mühendislik disipliniyle test et ve doğrula"** anlayışıyla bir işi uçtan uca sahiplenerek yürütülmüştür:
 
-1. **Figma Analizi & Mimari Planlama** — AI, Figma tasarım yapısını analiz ederek dosya tabanlı yönlendirme mimarisini, komponent hiyerarşisini ve tema sistemini kod yazmadan önce önerdi.
+1. **Uçtan Uca Sahiplenme & Mimari Kurgu** — Figma'daki kullanıcı akışı analiz edilerek; ölçeklenebilir Expo Router dosya yapısı, merkezi tema tokenları ve modüler bileşen mimarisi kodlamaya başlamadan önce kurgulandı.
+2. **Hızlı Üretim & Kodu Okuyup Doğrulama** — AI çıktısı körü körüne kopyalanmadı; her satır okunup, mantığı anlaşılarak ve test edilerek projeye dahil edildi:
+   - Figma auto-layout, özel gradient'ler ve glass-morphism efektleri piksel sadakatiyle koda aktarıldı.
+   - Platform farklılıkları (Android uçtan uca navigasyon çubuğu, yön kilitleme, güvenli alanlar) erkenden tespit edilip çözüldü.
+3. **Aktif Code Review & Sürekli İyileştirme** — AI destekli çoklu review döngüsüyle clean code prensipleri denetlendi ve proaktif refactoring yapıldı:
+   - **Tek Sorumluluk Prensibi (SRP):** 600+ satırlık monolitik senaryo ekranı; Brifing (`BriefingView`), Seçenekler (`OptionsView`), Video ve Karar DNA'sı (`DNAResultView`) olmak üzere izole bileşenlere bölündü.
+   - **DRY (Kendini Tekrar Etme):** Auth ekranları ortak `AuthLayout`'a taşındı, doğrulama mantığı (`validators.ts`) merkezileştirildi.
+   - **Tip Güvenliği (Type Safety):** Tüm `any` tipleri temizlenerek `expo-video`'nun gerçek tipleriyle donatıldı.
+4. **Mobil Deneyim, Kullanıcı Deneyimi (UX) ve Performans** — Mobil kaynak kısıtları gözetilerek:
+   - Yatay FlatList'te sadece ekranda odaklanan ilk 2-3 kartın videosunun oynatılması, diğerlerinin durağan görsele çevrilerek bellek tasarrufu sağlanması uygulandı.
+   - Native C++ `SharedObject` yaşam döngüsü yönetilerek unmount anındaki runtime hataları giderildi.
+   - Ekran okuyucular için erişilebilirlik (a11y) rolleri ve durumları eklendi.
+5. **Kalite Güvencesi ve Hata Takibi** — Kod tabanı her adımda `npx tsc --noEmit` ve `npx expo lint` ile doğrulanarak sıfır hata ve sıfır uyarı ile teslim standardına ulaştırıldı.
 
-2. **Komponent Komponent Geliştirme** — Her UI bileşeni iteratif olarak inşa edildi:
-   - Figma tasarım tokenları (renkler, tipografi, boşluklar) merkezi tema sistemine çevrildi
-   - Karmaşık görsel öğeler (glass-morphism butonlar, radar grafikleri, SVG ikonlar) Figma katman yapısı AI'ya aktarılarak uygulandı
-   - Platformlar arası sorunlar (Android navigasyon çubuğu, iOS safe area, font fallback) işbirliğiyle çözüldü
+### Geliştirme Felsefesi
 
-3. **Çok Aşamalı Simülasyon Akışı** — Video oynatma durum makinesi, doğru geçişler ve video yaşam döngüsü yönetimi sağlanarak AI desteğiyle tasarlandı ve uygulandı.
-
-4. **Kod İnceleme & Kalite Güvence** — AI kapsamlı kod incelemesi gerçekleştirdi:
-   - TypeScript tip güvenliği (strict mod aktif)
-   - Kullanılmayan importlar ve ölü kod temizliği
-   - Lint hatalarının çözümü
-   - Erişilebilirlik iyileştirmeleri
-
-5. **Dokümantasyon** — Bu README işbirliğiyle oluşturuldu.
-
-### AI Kullanım Felsefesi
-
-> AI, anlayışın yerine değil, **güç çarpanı** olarak kullanıldı. Her AI kod önerisi entegrasyon öncesinde incelendi, anlaşıldı ve doğrulandı. Geliştirici, mimari kararların sahipliğini korurken, uygulama hızı, platformlar arası sorun keşfi ve kod kalite güvencesi için AI'dan yararlandı.
+> Yapay zekâ, işi teslim etmek için bir kestirme değil; **öğrenme hızını ve üretim verimini katlayan bir güç çarpanı** olarak konumlandırıldı. Bir işi uçtan uca sahiplenmenin gereği olarak; üretilen her kod okundu, test edildi, code review geri bildirimleriyle olgunlaştırıldı ve canlıya hazır kalitede inşa edildi.
 
 ---
 
