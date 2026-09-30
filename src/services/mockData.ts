@@ -7,6 +7,11 @@ export interface ScenarioItem {
   videoSource?: ReturnType<typeof require>;
 }
 
+export const MOCK_USER = {
+  email: 'johndoe@gmail.com',
+  password: 'Johndoe123',
+};
+
 export const MOCK_SCENARIOS: ScenarioItem[] = [
   {
     id: 'iraq-war-1',

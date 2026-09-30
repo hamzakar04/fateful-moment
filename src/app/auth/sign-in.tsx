@@ -8,16 +8,41 @@ import { Button } from '../../components/ui/Button';
 import { Colors, Layout } from '../../constants/theme';
 import { IPhoneChrome } from '../../components/system/IPhoneChrome';
 
+import { MOCK_USER } from '../../services/mockData';
+
 export default function SignInScreen() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordError, setPasswordError] = useState<string | undefined>(undefined);
 
   const emailError = emailTouched && email.trim().length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
     ? 'Please enter a valid email address.'
     : undefined;
   const canSubmit = email.trim().length > 0 && password.length > 0 && !emailError;
+
+  const handleSignIn = () => {
+    if (!canSubmit) return;
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // Mock User Doğrulaması (Figma Wrong Password case)
+    // Kayıtlı mock kullanıcı: johndoe@gmail.com / Johndoe123
+    if (normalizedEmail === MOCK_USER.email.toLowerCase()) {
+      if (password !== MOCK_USER.password) {
+        setPasswordError('Wrong password');
+        return;
+      }
+    } else if (password !== MOCK_USER.password) {
+      // Herhangi bir email ile yanlış şifre denendiğinde de Figma'daki hata tetiklenir
+      setPasswordError('Wrong password');
+      return;
+    }
+
+    setPasswordError(undefined);
+    router.replace('/home');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,7 +70,10 @@ export default function SignInScreen() {
               autoCapitalize="none"
               value={email}
               error={emailError}
-              onChangeText={setEmail}
+              onChangeText={(text) => {
+                setEmail(text);
+                if (passwordError) setPasswordError(undefined);
+              }}
               onBlur={() => setEmailTouched(true)}
             />
             <Input
@@ -56,14 +84,16 @@ export default function SignInScreen() {
               placeholderTextColor="#62748E"
               isPassword
               value={password}
-              onChangeText={setPassword}
+              error={passwordError}
+              onChangeText={(text) => {
+                setPassword(text);
+                if (passwordError) setPasswordError(undefined);
+              }}
             />
 
             <Button
               title="Sign In"
-              onPress={() => {
-                if (canSubmit) router.replace('/home');
-              }}
+              onPress={handleSignIn}
               variant="glass"
               disabled={!canSubmit}
               style={styles.submitButton}

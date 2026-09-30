@@ -8,6 +8,7 @@ import { Input } from '../../components/ui/Input';
 import { Button } from '../../components/ui/Button';
 import { Colors, Layout, Typography } from '../../constants/theme';
 import { IPhoneChrome } from '../../components/system/IPhoneChrome';
+import { MOCK_USER } from '../../services/mockData';
 
 const checkCircleXml = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.99992 1.3335C4.32659 1.3335 1.33325 4.32683 1.33325 8.00016C1.33325 11.6735 4.32659 14.6668 7.99992 14.6668C11.6733 14.6668 14.6666 11.6735 14.6666 8.00016C14.6666 4.32683 11.6733 1.3335 7.99992 1.3335ZM11.1866 6.46683L7.40658 10.2468C7.31325 10.3402 7.18658 10.3935 7.05325 10.3935C6.91992 10.3935 6.79325 10.3402 6.69992 10.2468L4.81325 8.36016C4.61992 8.16683 4.61992 7.84683 4.81325 7.6535C5.00658 7.46016 5.32658 7.46016 5.51992 7.6535L7.05325 9.18683L10.4799 5.76016C10.6733 5.56683 10.9933 5.56683 11.1866 5.76016C11.3799 5.9535 11.3799 6.26683 11.1866 6.46683Z" fill="#00D3F3"/></svg>';
 const uncheckCircleXml = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.99992 1.3335C4.32659 1.3335 1.33325 4.32683 1.33325 8.00016C1.33325 11.6735 4.32659 14.6668 7.99992 14.6668C11.6733 14.6668 14.6666 11.6735 14.6666 8.00016C14.6666 4.32683 11.6733 1.3335 7.99992 1.3335ZM11.1866 6.46683L7.40658 10.2468C7.31325 10.3402 7.18658 10.3935 7.05325 10.3935C6.91992 10.3935 6.79325 10.3402 6.69992 10.2468L4.81325 8.36016C4.61992 8.16683 4.61992 7.84683 4.81325 7.6535C5.00658 7.46016 5.32658 7.46016 5.51992 7.6535L7.05325 9.18683L10.4799 5.76016C10.6733 5.56683 10.9933 5.56683 11.1866 5.76016C11.3799 5.9535 11.3799 6.26683 11.1866 6.46683Z" fill="#90A1B9"/></svg>';
@@ -24,6 +25,7 @@ export default function SignUpScreen() {
   const [password, setPassword] = useState('');
   const [passwordEdited, setPasswordEdited] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
+  const [passwordError, setPasswordError] = useState<string | undefined>(undefined);
   const [touched, setTouched] = useState({ fullName: false, email: false });
 
   useEffect(() => {
@@ -67,7 +69,22 @@ export default function SignUpScreen() {
           <View style={styles.form}>
             <Input label="Full Name" showLabel={false} compact placeholder="Full Name" autoCapitalize="words" value={fullName} error={fullNameError} onChangeText={setFullName} onBlur={() => setTouched((current) => ({ ...current, fullName: true }))} />
             <Input label="Your email address" showLabel={false} compact placeholder="Your email address" keyboardType="email-address" autoCapitalize="none" value={email} error={emailError} onChangeText={setEmail} onBlur={() => setTouched((current) => ({ ...current, email: true }))} />
-            <Input label="Your password" showLabel={false} compact placeholder="Your password" isPassword value={password} onChangeText={(value) => { setPasswordEdited(true); setPassword(value); }} onFocus={() => setPasswordFocused(true)} onBlur={() => setPasswordFocused(false)} />
+            <Input
+              label="Your password"
+              showLabel={false}
+              compact
+              placeholder="Your password"
+              isPassword
+              value={password}
+              error={passwordError}
+              onChangeText={(value) => {
+                setPasswordEdited(true);
+                setPassword(value);
+                if (passwordError) setPasswordError(undefined);
+              }}
+              onFocus={() => setPasswordFocused(true)}
+              onBlur={() => setPasswordFocused(false)}
+            />
 
             {passwordEdited && passwordFocused && (
               <View style={styles.rules}>
@@ -83,7 +100,15 @@ export default function SignUpScreen() {
             <Button
               title="Sign up"
               onPress={() => {
-                if (canSubmit) router.replace('/home');
+                if (!canSubmit) return;
+                const normalizedEmail = email.trim().toLowerCase();
+                // Eğer johndoe@gmail.com ile kayıt olunmaya çalışılır ve şifre Johndoe123 değilse:
+                if (normalizedEmail === MOCK_USER.email.toLowerCase() && password !== MOCK_USER.password) {
+                  setPasswordError('Wrong password');
+                  return;
+                }
+                setPasswordError(undefined);
+                router.replace('/home');
               }}
               variant="glass"
               style={[styles.submitButton, !canSubmit && styles.submitButtonDisabled]}

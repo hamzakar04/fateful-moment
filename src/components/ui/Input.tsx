@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
   },
   inputContainerError: {
-    borderColor: Colors.accent,
+    borderColor: '#E53A3A',
   },
   input: {
     flex: 1,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_300Light',
     fontSize: 11,
     lineHeight: 16,
-    color: Colors.accent,
+    color: '#E53A3A',
     marginTop: 4,
   }
 });
