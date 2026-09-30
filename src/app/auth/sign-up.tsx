@@ -102,9 +102,9 @@ export default function SignUpScreen() {
               onPress={() => {
                 if (!canSubmit) return;
                 const normalizedEmail = email.trim().toLowerCase();
-                // Eğer johndoe@gmail.com ile kayıt olunmaya çalışılır ve şifre Johndoe123 değilse:
-                if (normalizedEmail === MOCK_USER.email.toLowerCase() && password !== MOCK_USER.password) {
-                  setPasswordError('Wrong password');
+                const isMockEmail = normalizedEmail === MOCK_USER.email.toLowerCase() || normalizedEmail === 'johndoe@mail.com';
+                if (isMockEmail && password !== MOCK_USER.password) {
+                  setPasswordError('Your password is wrong. Please try again.');
                   return;
                 }
                 setPasswordError(undefined);

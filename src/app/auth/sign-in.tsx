@@ -28,15 +28,16 @@ export default function SignInScreen() {
     const normalizedEmail = email.trim().toLowerCase();
 
     // Mock User Doğrulaması (Figma Wrong Password case)
-    // Kayıtlı mock kullanıcı: johndoe@gmail.com / Johndoe123
-    if (normalizedEmail === MOCK_USER.email.toLowerCase()) {
+    // Kayıtlı mock kullanıcı: johndoe@gmail.com veya johndoe@mail.com / Johndoe123
+    const isMockEmail = normalizedEmail === MOCK_USER.email.toLowerCase() || normalizedEmail === 'johndoe@mail.com';
+
+    if (isMockEmail) {
       if (password !== MOCK_USER.password) {
-        setPasswordError('Wrong password');
+        setPasswordError('Your password is wrong. Please try again.');
         return;
       }
     } else if (password !== MOCK_USER.password) {
-      // Herhangi bir email ile yanlış şifre denendiğinde de Figma'daki hata tetiklenir
-      setPasswordError('Wrong password');
+      setPasswordError('Your password is wrong. Please try again.');
       return;
     }
 
