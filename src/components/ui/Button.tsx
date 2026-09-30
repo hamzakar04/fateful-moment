@@ -112,14 +112,12 @@ export function Button({
         <View style={StyleSheet.absoluteFill} pointerEvents="none">
           <Svg width={layout.width} height={layout.height} style={StyleSheet.absoluteFill}>
             <Defs>
-              {/* 1. Sol-Üst parça: Saf şeffaf beyaz cam ışıması */}
               <SvgLinearGradient id={`glassRimTop_${safeId}`} x1="0%" y1="0%" x2="100%" y2="0%">
                 <Stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.35} />
                 <Stop offset="50%" stopColor="#FFFFFF" stopOpacity={0.18} />
                 <Stop offset="100%" stopColor="#FFFFFF" stopOpacity={0} />
               </SvgLinearGradient>
 
-              {/* 2. Sağ-Alt parça: Saf şeffaf beyaz cam ışıması */}
               <SvgLinearGradient id={`glassRimBottom_${safeId}`} x1="100%" y1="100%" x2="0%" y2="100%">
                 <Stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.30} />
                 <Stop offset="50%" stopColor="#FFFFFF" stopOpacity={0.15} />
@@ -127,7 +125,6 @@ export function Button({
               </SvgLinearGradient>
             </Defs>
 
-            {/* 1. Sol-Üst: Sol kenardan başlar, sol-üst köşeyi döner, üst kenarı çizer, SAĞ-ÜSTTE BİTER (sağ-üst boş kalır) */}
             <Path
               d={`M ${s} ${layout.height - borderRadius} L ${s} ${borderRadius} A ${r} ${r} 0 0 1 ${borderRadius} ${s} L ${layout.width - borderRadius} ${s}`}
               stroke={`url(#glassRimTop_${safeId})`}
@@ -136,7 +133,6 @@ export function Button({
               fill="none"
             />
 
-            {/* 2. Sağ-Alt: Sağ kenardan başlar, sağ-alt köşeyi döner, TÜM ALT KENARI ÇİZER, SOL-ALTTA BİTER (sol-alt boş kalır) */}
             <Path
               d={`M ${layout.width - s} ${borderRadius} L ${layout.width - s} ${layout.height - borderRadius} A ${r} ${r} 0 0 1 ${layout.width - borderRadius} ${layout.height - s} L ${borderRadius} ${layout.height - s}`}
               stroke={`url(#glassRimBottom_${safeId})`}

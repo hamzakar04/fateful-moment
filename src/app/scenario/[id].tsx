@@ -373,7 +373,6 @@ export default function ScenarioScreen() {
               </View>
             )}
 
-            {/* Row 1 */}
             <View style={styles.optionsRow}>
               {[0, 1].map((index) => {
                 const option = OPTIONS[index];
@@ -399,7 +398,6 @@ export default function ScenarioScreen() {
               })}
             </View>
 
-            {/* Row 2 */}
             <View style={styles.optionsRow}>
               {[2, 3].map((index) => {
                 const option = OPTIONS[index];
@@ -425,7 +423,6 @@ export default function ScenarioScreen() {
               })}
             </View>
 
-            {/* Row 3 */}
             <View style={styles.optionsRowCenter}>
               {[4].map((index) => {
                 const option = OPTIONS[index];

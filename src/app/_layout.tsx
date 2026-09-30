@@ -43,9 +43,7 @@ export default function RootLayout() {
       try {
         NavigationBar.setStyle('light');
         NavigationBar.setHidden(isScenario);
-      } catch {
-        // ignore
-      }
+      } catch {}
     }
   }, [isScenario]);
 

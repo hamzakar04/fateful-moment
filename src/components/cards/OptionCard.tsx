@@ -17,16 +17,9 @@ interface OptionCardProps {
 const CARD_WIDTH = 345;
 const CARD_HEIGHT = 66;
 
-/**
- * Parallelogram glass sheen overlay — matches Figma layer stack:
- *   1. Bottom: tiled pattern rects (#D9D9D9, 0.36 opacity)
- *   2. Top: linear gradient (#0F172B → #00D3F3 → #0F172B, 0.63 opacity)
- * The gradient partially covers the pattern, creating subtle diagonal light streaks.
- */
 function SelectedGlassFill() {
   return (
     <View style={styles.selectedFill} pointerEvents="none">
-      {/* Layer 1 (bottom): Parallelogram pattern — #D9D9D9 rects at 0.36 opacity */}
       <Svg
         width={CARD_WIDTH}
         height={CARD_HEIGHT}
@@ -34,13 +27,11 @@ function SelectedGlassFill() {
         style={StyleSheet.absoluteFill}
       >
         <G opacity={0.36}>
-          {/* ~68×102 rects, rotated 23°, spaced ~138px apart, origin y=-27 */}
           <Rect x={23} y={-27} width={68} height={102} fill="#D9D9D9" transform="rotate(23 23 -27)" />
           <Rect x={161} y={-27} width={68} height={102} fill="#D9D9D9" transform="rotate(23 161 -27)" />
           <Rect x={299} y={-27} width={68} height={102} fill="#D9D9D9" transform="rotate(23 299 -27)" />
         </G>
       </Svg>
-      {/* Layer 2 (top): Gradient overlay — Figma: 91.21deg, #0F172B → #00D3F3 → #0F172B at 0.63 */}
       <LinearGradient
         colors={[
           'rgba(15, 23, 43, 0.63)',
@@ -88,7 +79,6 @@ export function OptionCard({
 }
 
 const styles = StyleSheet.create({
-  /* Is selected?=Default */
   card: {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
@@ -102,13 +92,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  /* Is selected?=Selected */
   selectedCard: {
     borderWidth: 2,
     borderColor: '#F8FAFC',
     backgroundColor: 'transparent',
   },
-  /* Is selected?=Passive */
   passiveCard: {
     borderWidth: 2,
     borderColor: '#F8FAFC',
