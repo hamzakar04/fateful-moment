@@ -26,6 +26,12 @@
 
 The app works with **dummy data** (no backend required) and runs on both **iOS** and **Android**.
 
+> [!IMPORTANT]
+> ### 📥 Android APK & Demo Credentials
+> - **Pre-built APK Download:** [Download Android APK (EAS Build #125d1fad)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+> - **Demo Account Email:** `johndoe@mail.com` (or `johndoe@gmail.com`)
+> - **Demo Account Password:** `Johndoe123`
+
 ---
 
 ## Features
@@ -165,13 +171,18 @@ npx expo start
 | **Android Emulator** | Press `a` in the terminal |
 | **Physical Device** | Scan the QR code with Expo Go |
 
-### Building APK
+### 📥 Download Pre-built APK
+
+You can directly download and install the preview APK on any physical Android device:
+- **Direct Build & Download Link:** [EAS Build #125d1fad (Preview APK)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+
+### Building APK Manually (Optional)
 
 ```bash
 # Install EAS CLI globally (if not installed)
 npm install -g eas-cli
 
-# Build Android APK
+# Build Android APK via EAS
 eas build --platform android --profile preview
 ```
 
@@ -263,6 +274,12 @@ Auth screens use **portrait** orientation (natural for form inputs), while scena
 **Fateful Moment**, Jr. Frontend Developer pozisyonu için bir case study olarak geliştirilen React Native mobil uygulamasıdır. Uygulama, Figma tasarımını birebir hayata geçirmekte olup **Flow v01**'in tamamını kapsar — Ana Ekran'dan senaryo brifinglerine, simülasyon/karar ekranlarına ve Karar DNA'sı sonuç ekranına kadar.
 
 Uygulama **dummy verilerle** çalışmaktadır (backend bağlantısı yoktur) ve hem **iOS** hem **Android**'de sorunsuz çalışır.
+
+> [!IMPORTANT]
+> ### 📥 Android APK & Test Giriş Bilgileri
+> - **Hazır APK İndirme Bağlantısı:** [Android APK İndir (EAS Build #125d1fad)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+> - **Test Kullanıcı E-posta:** `johndoe@mail.com` (veya `johndoe@gmail.com`)
+> - **Test Kullanıcı Şifre:** `Johndoe123`
 
 ---
 
@@ -387,13 +404,18 @@ npx expo start
 | **Android Emülatör** | Terminalde `a` tuşuna basın |
 | **Fiziksel Cihaz** | Expo Go ile QR kodu okutun |
 
-### APK Oluşturma
+### 📥 Hazır APK İndirme
+
+Uygulamayı fiziksel bir Android cihazda hemen deneyimlemek için derlenmiş önizleme APK'sını doğrudan indirebilirsiniz:
+- **EAS Build & İndirme Bağlantısı:** [Fateful Moment APK İndir (EAS Build #125d1fad)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+
+### Sıfırdan APK Oluşturma (İsteğe Bağlı)
 
 ```bash
 # EAS CLI yükleyin (yüklü değilse)
 npm install -g eas-cli
 
-# Android APK oluşturun
+# Android APK oluşturun (EAS Build)
 eas build --platform android --profile preview
 ```
 
