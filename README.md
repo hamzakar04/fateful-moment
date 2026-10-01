@@ -244,9 +244,6 @@ Expo Router provides type-safe, file-based routing that mirrors the screen hiera
 ### Why expo-video Instead of expo-av?
 `expo-video` is Expo SDK 57's recommended video solution with better performance, native controls support, and proper lifecycle management compared to the legacy `expo-av` Video component.
 
-### Why SVG for Radar Chart?
-The Decision DNA radar chart uses `react-native-svg` directly rather than a charting library to achieve pixel-perfect Figma fidelity without unnecessary bundle size overhead.
-
 ### Orientation Strategy
 Auth screens use **portrait** orientation (natural for form inputs), while scenario/home screens use **landscape** orientation (matching the cinematic simulation experience shown in the Figma design).
 
@@ -468,9 +465,6 @@ Dosya tabanlı, tip güvenli yönlendirme sağlar ve Figma tasarımındaki ekran
 
 ### Neden expo-video?
 Expo SDK 57'nin önerilen video çözümüdür; eski `expo-av`'ye kıyasla daha iyi performans ve yaşam döngüsü yönetimi sunar.
-
-### Neden SVG ile Radar Grafiği?
-Gereksiz paket boyutu olmadan Figma'ya piksel-mükemmel sadakat sağlar.
 
 ### Yön Stratejisi
 Auth ekranları **dikey** (form girişleri için doğal), senaryo/ana ekranlar **yatay** (sinematik simülasyon deneyimine uygun) kullanır.
