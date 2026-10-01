@@ -27,8 +27,9 @@
 The app works with **dummy data** (no backend required) and runs on both **iOS** and **Android**.
 
 > [!IMPORTANT]
-> ### 📥 Android APK & Demo Credentials
+> ### 📥 Android APK, Demo Videos & Credentials
 > - **Pre-built APK Download:** [Download Android APK (EAS Build #125d1fad)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+> - **Screen Recordings & APK (Google Drive):** [Google Drive Demo & APK Folder](https://drive.google.com/drive/folders/15uqD9Yum12XSCpyqcUaQ6VOSHgAEqyRW)
 > - **Demo Account Email:** `johndoe@mail.com` (or `johndoe@gmail.com`)
 > - **Demo Account Password:** `Johndoe123`
 
@@ -171,10 +172,11 @@ npx expo start
 | **Android Emulator** | Press `a` in the terminal |
 | **Physical Device** | Scan the QR code with Expo Go |
 
-### 📥 Download Pre-built APK
+### 📥 Download Pre-built APK & Screen Recordings
 
-You can directly download and install the preview APK on any physical Android device:
+You can directly download and install the preview APK or watch screen recordings of the app in action:
 - **Direct Build & Download Link:** [EAS Build #125d1fad (Preview APK)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+- **Google Drive (Screen Recordings & APK):** [Google Drive Demo Folder](https://drive.google.com/drive/folders/15uqD9Yum12XSCpyqcUaQ6VOSHgAEqyRW)
 
 ### Building APK Manually (Optional)
 
@@ -276,8 +278,9 @@ Auth screens use **portrait** orientation (natural for form inputs), while scena
 Uygulama **dummy verilerle** çalışmaktadır (backend bağlantısı yoktur) ve hem **iOS** hem **Android**'de sorunsuz çalışır.
 
 > [!IMPORTANT]
-> ### 📥 Android APK & Test Giriş Bilgileri
+> ### 📥 Android APK, Demo Videoları & Test Giriş Bilgileri
 > - **Hazır APK İndirme Bağlantısı:** [Android APK İndir (EAS Build #125d1fad)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+> - **Ekran Kayıtları & APK (Google Drive):** [Google Drive Demo & APK Klasörü](https://drive.google.com/drive/folders/15uqD9Yum12XSCpyqcUaQ6VOSHgAEqyRW)
 > - **Test Kullanıcı E-posta:** `johndoe@mail.com` (veya `johndoe@gmail.com`)
 > - **Test Kullanıcı Şifre:** `Johndoe123`
 
@@ -404,10 +407,11 @@ npx expo start
 | **Android Emülatör** | Terminalde `a` tuşuna basın |
 | **Fiziksel Cihaz** | Expo Go ile QR kodu okutun |
 
-### 📥 Hazır APK İndirme
+### 📥 Hazır APK & Ekran Kayıtları İndirme
 
-Uygulamayı fiziksel bir Android cihazda hemen deneyimlemek için derlenmiş önizleme APK'sını doğrudan indirebilirsiniz:
-- **EAS Build & İndirme Bağlantısı:** [Fateful Moment APK İndir (EAS Build #125d1fad)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+Uygulamayı fiziksel bir Android cihazda hemen deneyimlemek veya çalışan ekran kayıtlarını izlemek için aşağıdaki bağlantıları kullanabilirsiniz:
+- **EAS Build & APK İndirme Bağlantısı:** [Fateful Moment APK İndir (EAS Build #125d1fad)](https://expo.dev/accounts/hamzakar04/projects/fateful-moment/builds/125d1fad-b879-46c4-afe1-7168951ea3c1)
+- **Google Drive (Ekran Kayıtları & APK Klasörü):** [Google Drive Demo Klasörü](https://drive.google.com/drive/folders/15uqD9Yum12XSCpyqcUaQ6VOSHgAEqyRW)
 
 ### Sıfırdan APK Oluşturma (İsteğe Bağlı)
 
